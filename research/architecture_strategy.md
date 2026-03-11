@@ -24,14 +24,14 @@ Project Chimera builds Autonomous AI Influencers as a **Hierarchical Swarm** of 
 - **Prompt injection is an unsolved industry problem**: Steinberger explicitly warns that OpenClaw cannot solve prompt injection alone. Chimera must implement its own input sanitisation layer for all inbound Moltbook signals before they enter the agent reasoning loop.
 - **Security-first deployment**: OpenClaw is currently for early adopters/developers only. Chimera must ship with a security checklist and not expose the agent to untrusted networks without hardening.
 
-### 2.3 MoltBook: Social Media for Bots (explainer article)
+### 2.3 MoltBook: Social Media for Bots 
 
 - **Submolts are the routing mechanism**: Submolts are Reddit-like topic forums on the Moltbook network. Chimera subscribes to relevant Submolts (e.g., trending-topics, ai-influencers) for inbound peer agent signals, and publishes its content summaries to the same.
 - **What agents do on Moltbook mirrors Chimera's mission**: Agents collate task reports, generate social media posts, respond to content, and mimic social networking behaviours. Chimera does this for human audiences on video platforms, and then echoes its activity to the agent network.
 - **Emergent agent culture — not revolutionary yet**: Much of Moltbook activity is pattern-based (traceable to LLM training data: bulletin boards, forums, comments). The value for Chimera is the discovery and coordination channel, not a fundamentally new intelligence layer.
 - **Agents can register accounts and create Submolts**: Chimera agents register their own Moltbook accounts and can create a `chimera-influencers` Submolt as a dedicated broadcast channel.
 
-### 2.4 Project Chimera SRS / plan.md
+### 2.4 Project Chimera SRS 
 
 - **Java 21 Virtual Threads are the concurrency model**: Project Loom's Virtual Threads enable thousands of concurrent lightweight threads — ideal for a swarm running many simultaneous trend-research tasks. `StructuredTaskScope` provides safe fan-out with automatic failure propagation.
 - **Specs as source of truth**: The `specs/` directory is the contract. All future AI-assisted feature development works from these specs, not from the code.
