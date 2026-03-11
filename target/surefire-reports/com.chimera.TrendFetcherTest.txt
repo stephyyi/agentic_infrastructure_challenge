@@ -1,0 +1,68 @@
+-------------------------------------------------------------------------------
+Test set: com.chimera.TrendFetcherTest
+-------------------------------------------------------------------------------
+Tests run: 9, Failures: 1, Errors: 7, Skipped: 0, Time elapsed: 0.015 s <<< FAILURE! -- in com.chimera.TrendFetcherTest
+com.chimera.TrendFetcherTest.fetchedTrend_cycleId_matchesInput -- Time elapsed: 0.004 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "com.chimera.agent.TrendFetcherService.fetchTrends(java.util.UUID)" because "this.service" is null
+	at com.chimera.TrendFetcherTest.fetchedTrend_cycleId_matchesInput(TrendFetcherTest.java:92)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.chimera.TrendFetcherTest.rankTopTrends_returnsSortedDescendingByScore -- Time elapsed: 0.002 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "com.chimera.agent.TrendFetcherService.rankTopTrends(java.util.List, int)" because "this.service" is null
+	at com.chimera.TrendFetcherTest.rankTopTrends_returnsSortedDescendingByScore(TrendFetcherTest.java:137)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.chimera.TrendFetcherTest.rankTopTrends_topNGreaterThanList_returnsAllItems -- Time elapsed: 0.001 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "com.chimera.agent.TrendFetcherService.rankTopTrends(java.util.List, int)" because "this.service" is null
+	at com.chimera.TrendFetcherTest.rankTopTrends_topNGreaterThanList_returnsAllItems(TrendFetcherTest.java:155)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.chimera.TrendFetcherTest.fetchedTrend_score_isBetweenZeroAndOne -- Time elapsed: 0.001 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "com.chimera.agent.TrendFetcherService.fetchTrends(java.util.UUID)" because "this.service" is null
+	at com.chimera.TrendFetcherTest.fetchedTrend_score_isBetweenZeroAndOne(TrendFetcherTest.java:80)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.chimera.TrendFetcherTest.fetchTrends_deduplicates_sameKeywordSameCycle -- Time elapsed: 0 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "com.chimera.agent.TrendFetcherService.fetchTrends(java.util.UUID)" because "this.service" is null
+	at com.chimera.TrendFetcherTest.fetchTrends_deduplicates_sameKeywordSameCycle(TrendFetcherTest.java:114)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.chimera.TrendFetcherTest.fetchTrends_onApiFailure_throwsChimeraAgentException -- Time elapsed: 0.001 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: fetchTrends must throw ChimeraAgentException after all retry attempts fail ==> Unexpected exception type thrown, expected: <com.chimera.agent.ChimeraAgentException> but was: <java.lang.NullPointerException>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:67)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:39)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3131)
+	at com.chimera.TrendFetcherTest.fetchTrends_onApiFailure_throwsChimeraAgentException(TrendFetcherTest.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+Caused by: java.lang.NullPointerException: Cannot invoke "com.chimera.agent.TrendFetcherService.fetchTrends(java.util.UUID)" because "this.service" is null
+	at com.chimera.TrendFetcherTest.lambda$fetchTrends_onApiFailure_throwsChimeraAgentException$0(TrendFetcherTest.java:105)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:53)
+	... 6 more
+
+com.chimera.TrendFetcherTest.fetchTrends_returnsAtLeast10Results -- Time elapsed: 0 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "com.chimera.agent.TrendFetcherService.fetchTrends(java.util.UUID)" because "this.service" is null
+	at com.chimera.TrendFetcherTest.fetchTrends_returnsAtLeast10Results(TrendFetcherTest.java:56)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.chimera.TrendFetcherTest.fetchedTrend_matchesApiContract_allFieldsNonNull -- Time elapsed: 0.001 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "com.chimera.agent.TrendFetcherService.fetchTrends(java.util.UUID)" because "this.service" is null
+	at com.chimera.TrendFetcherTest.fetchedTrend_matchesApiContract_allFieldsNonNull(TrendFetcherTest.java:65)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
