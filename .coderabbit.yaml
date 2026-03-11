@@ -1,0 +1,138 @@
+version: "2"
+
+# Project Chimera — CodeRabbit AI Review Policy
+# Instructs the AI reviewer to enforce spec alignment, Java thread safety,
+# and security on every pull request.
+
+reviews:
+  auto_review:
+    enabled: true
+    drafts: false
+    base_branches:
+      - main
+
+  review_profile: "assertive"
+
+  # High-level review instructions applied to every PR
+  high_level_summary: true
+  poem: false
+
+  path_instructions:
+    # ── Java source files ──────────────────────────────────────────────────
+    - path: "src/**/*.java"
+      instructions: |
+        Review this Java file for Project Chimera. Apply ALL of the following checks:
+
+        1. SPEC ALIGNMENT
+           - Every public class, interface, or record must contain a Javadoc comment
+             referencing the spec story ID it implements (e.g., "Implements T-001").
+           - Flag any class with no traceable spec reference.
+           - If the class touches a REST endpoint, verify the path and HTTP method
+             match the contract in specs/technical.md exactly.
+
+        2. JAVA THREAD SAFETY
+           - All DTOs passed between Planner, Worker, and Judge MUST be Java Records.
+             Flag any POJO with mutable setters used as an agent payload.
+           - Flag any use of mutable shared state (non-final fields, static mutable state)
+             in classes that will be invoked from Virtual Threads concurrently.
+           - OCC: Any code that writes agent state to the database must verify
+             state_version has not advanced since the task was forked.
+             Flag writes that do not check state_version.
+
+        3. VIRTUAL THREADS & MODERN CONCURRENCY
+           - Flag any use of:
+             - legacy `new Thread(...)` construction
+             - `Executors.newFixedThreadPool(...)` or `newCachedThreadPool()`
+             - `synchronized` blocks (prefer `java.util.concurrent.locks` or
+               VirtualThread-safe alternatives)
+           - Preferred patterns: `Executors.newVirtualThreadPerTaskExecutor()`,
+             `StructuredTaskScope.ShutdownOnFailure`, `Thread.ofVirtual()`.
+
+        4. SECURITY VULNERABILITIES
+           - Flag any hardcoded credentials, API keys, tokens, or passwords.
+             All secrets must come from environment variables only.
+           - Flag any SQL built by string concatenation (use parameterised queries).
+           - Flag any inbound external data (Moltbook messages, platform webhooks)
+             that reaches the agent reasoning loop without going through the
+             3-step injection defense pipeline (length gate → pattern strip → guard LLM).
+           - Flag any use of `Runtime.exec()` or `ProcessBuilder` with unsanitised input.
+
+        5. LLM COST DISCIPLINE
+           - Flag any LLM call that does not produce an AGENT_LOG entry with:
+             llm_model, prompt_hash, token_count, cost_usd.
+           - Flag any premium model (Opus) call used for a commodity task
+             (hashtag generation, classification, injection guarding).
+             Commodity tasks must use Haiku.
+
+    # ── Test files ─────────────────────────────────────────────────────────
+    - path: "tests/**/*.java"
+      instructions: |
+        Review this JUnit 5 test file for Project Chimera.
+
+        1. TDD DISCIPLINE
+           - Verify the test is in the RED phase (references an unimplemented class or method).
+             Flag any test that passes trivially without a real implementation — that is
+             a false green and defeats the purpose of TDD.
+           - Test method names must follow the pattern: methodName_scenario_expectedBehaviour().
+
+        2. COVERAGE
+           - Each test must reference the spec story ID it validates in its @DisplayName.
+           - Flag any test that lacks an assertion (no assert* call = not a test).
+
+        3. ISOLATION
+           - Tests must not depend on external services, databases, or network.
+             Use mocks (Mockito) or stubs for all external dependencies.
+
+    # ── Spec files ─────────────────────────────────────────────────────────
+    - path: "specs/**/*.md"
+      instructions: |
+        Review this spec file for Project Chimera.
+
+        1. SPEC INTEGRITY
+           - Flag any PR that removes or weakens an acceptance criterion without
+             a corresponding architectural decision record (ADR) explaining why.
+           - Flag changes to immutable constraints in specs/_meta.md
+             (HUMAN_IN_LOOP=true, Java 21 requirement, secrets policy, retry policy).
+
+        2. COMPLETENESS
+           - Every user story must have at least one acceptance criterion.
+           - Every API endpoint in specs/technical.md must have a request shape,
+             response shape, and at least one error response defined.
+
+    # ── Skills READMEs ─────────────────────────────────────────────────────
+    - path: "skills/**/*.md"
+      instructions: |
+        Review this skill specification for Project Chimera.
+
+        - Verify the Input and Output contracts are defined as Java Records
+          (or show the record structure clearly).
+        - Verify the LLM tier used is appropriate (Haiku for commodity, Sonnet for drafting,
+          Opus for quality review).
+        - Verify error handling covers: API failure, budget exceeded, and invalid LLM response.
+        - Verify the retry policy matches specs/_meta.md (max 3, base 1s, exponential).
+
+    # ── CLAUDE.md / rules file ─────────────────────────────────────────────
+    - path: "CLAUDE.md"
+      instructions: |
+        Review the AI co-pilot rules file for Project Chimera.
+
+        - Verify the Prime Directive is present and unambiguous.
+        - Verify Java 21 Records, Virtual Threads, and JUnit 5 are explicitly mandated.
+        - Verify the OCC rule is present.
+        - Verify the traceability requirement (spec reference before code) is present.
+        - Flag any instruction that could lead the AI agent to write code without
+          checking specs/ first.
+
+    # ── CI/CD pipeline ─────────────────────────────────────────────────────
+    - path: ".github/workflows/*.yml"
+      instructions: |
+        Review this GitHub Actions workflow for Project Chimera.
+
+        - Verify Java 21 (Temurin distribution) is used.
+        - Verify `make test`, `make lint`, and `make spec-check` all run on every push.
+        - Flag any workflow that skips the spec-check job.
+        - Flag any secrets referenced directly in the YAML (must use GitHub Secrets).
+        - Verify the test job uploads Surefire reports as artifacts.
+
+chat:
+  auto_reply: true
