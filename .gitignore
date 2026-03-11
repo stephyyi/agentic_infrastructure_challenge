@@ -1,0 +1,73 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+pip-wheel-metadata/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Environment & secrets
+.env
+.env.*
+*.env
+config/secrets.yml
+config/local_settings.py
+**/credentials.json
+**/service_account*.json
+
+# Database
+*.sql.bak
+*.dump
+*.pgdump
+pg_dump/
+backups/
+
+# Logs
+*.log
+logs/
+*.out
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDEs
+.cursor/
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Data files (adjust as needed)
+*.csv
+*.tsv
+*.parquet
+data/raw/
+data/processed/
+
+# Reports / output
+reports/output/
+*.xlsx
+*.pdf
+
+# Temp
+tmp/
+temp/
+scratch/
